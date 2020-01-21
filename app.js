@@ -70,11 +70,32 @@ app.get('/cypher', (req, res) => {
     return character = String.fromCharCode(shiftedNumber);
     
   });
-  console.log(mappedText);
   mappedText = mappedText.join('');
 
   res.send(`Encoded: ${mappedText} `);
 
+});
+
+app.get('/lotto', (req, res) => {
+  let inputArr = req.query.numbers;
+
+  inputArr = inputArr.map(number => parseInt(number));
+  const randomArr = Array.from({length: 6}, () => Math.floor(Math.random() * 20));
+  console.log(inputArr, randomArr);
+  let count = 0;
+  inputArr.map((number) => {
+    if ((!!randomArr.filter(value => value === number).length)) return count+=1;
+  });
+
+  if (count <= 1) {
+    res.send('Sorry, you lose');
+  } else if (count >= 2) {
+    res.send('Congratulations, you win a free ticket!');
+  } else if (count === 5) {
+    res.send('Congratulations!  You win $100!');
+  } else {
+    res.send('Wow!  Unbelievable!  You could have won the mega millions!');
+  }
 });
 
 app.listen(8001, () => {
