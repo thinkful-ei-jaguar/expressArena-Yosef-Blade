@@ -53,7 +53,28 @@ app.get('/sum', (req, res) => {
   const aNumber = parseInt(req.query.a);
   const bNumber = parseInt(req.query.b);
   const sum = (aNumber + bNumber).toString();
-  res.send(`The sum of ${aNumber} and ${bNumber} is ${sum}.`)
+  res.send(`The sum of ${aNumber} and ${bNumber} is ${sum}.`);
+});
+
+app.get('/cypher', (req, res) => {
+  const text = req.query.text;
+  const shift = parseInt(req.query.shift);
+  
+  const textArr = text.split('');
+  
+  let mappedText = textArr.map(character => {
+    const charNumber = character.charCodeAt(0);
+    
+    const shiftedNumber = charNumber + shift;
+    
+    return character = String.fromCharCode(shiftedNumber);
+    
+  });
+  console.log(mappedText);
+  mappedText = mappedText.join('');
+
+  res.send(`Encoded: ${mappedText} `);
+
 });
 
 app.listen(8001, () => {
